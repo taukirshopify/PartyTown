@@ -1,0 +1,107 @@
+<div class="product-tab-area">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <div class="features-tab indicator-style2">
+          <!-- Nav tabs -->
+          <ul class="nav nav-tabs" role="tablist">
+
+            {% for block in section.blocks %}
+            {% assign collection = collections[block.settings.collection] %}
+            <li class="vc_tta-tab {% if forloop.first == true %}active{% endif %}" role="presentation"><a href="#{{ collection.title | handle }}" aria-controls="profile" role="tab" data-toggle="tab">{{ collection.title }}</a></li>
+            {% endfor %}
+            
+          </ul>
+          <!-- Tab panes -->
+          <div class="tab-content">
+            
+            {% for block in section.blocks %}
+            {% assign collection = collections[block.settings.collection] %}
+            <div role="tabpanel" class="tab-pane {% if forloop.first == true %}active{% endif %}" id="{{ collection.title | handle }}">
+              <div class="row">
+                <div class="features-curosel2 indicator-style2">
+                  
+                  {% for product in collection.products limit: 10 %}
+                  <div class="col-md-3">
+					{% include 'product-grid-item' %}
+                  </div>
+				  {% endfor %}
+                  
+                </div>
+              </div>	
+            </div>
+            {% endfor %}
+            
+          </div>
+        </div>				
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<style>
+  
+.product-tab-area .vc_tta-tab.active::after, .design-area .vc_tta-tab.active::after {
+  background: rgba(0, 0, 0, 0) url(" {{ section.settings.underline-style-2 | img_url: 'master' }} ") no-repeat scroll 0 0;
+}
+  
+</style>
+
+
+
+
+
+
+
+{% schema %}
+  {
+    "name": "Tab Products",
+    "settings": [
+			{
+				"type": "image_picker",
+				"id": "underline-style-2",
+				"label": "select border image"
+			}	
+
+	],
+	"blocks":[
+			{
+				"type": "tab_products",
+				"name": "tab product",
+				"settings": [
+					{
+						"type": "collection",
+						"id": "collection",
+						"label": "Choose collection"
+					}
+				]
+			}
+		],
+		"presets":[
+			{
+				"name": "Tab Products",
+				"category": "collection",
+				"blocks":[
+					{
+						"type": "tab_products"
+					},
+					{
+						"type": "tab_products"
+					},
+					{
+						"type": "tab_products"
+					}
+				]
+			}
+		]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

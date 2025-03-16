@@ -1,0 +1,20 @@
+
+
+
+
+
+  .notice-scroll-wrap{overflow:hidden}.notice-scroll .offer-notice{-webkit-animation:newsMove 30s linear infinite;animation:newsMove 30s linear infinite;position:relative;white-space:nowrap;margin-bottom:0;color:var(--white-color);text-transform:uppercase}.notice-scroll .offer-notice a{color:inherit}.notice-scroll .offer-notice:before{content:"";height:6px;width:6px;border-radius:99px;background-color:var(--white-color);display:inline-block;position:absolute;left:-27px;top:9px}@-webkit-keyframes newsMove{0%{-webkit-transform:translate3d(100%,0,0);transform:translate3d(100%,0,0)}100%{-webkit-transform:translate3d(-200%,0,0);transform:translate3d(-200%,0,0)}}@keyframes newsMove{0%{-webkit-transform:translate3d(100%,0,0);transform:translate3d(100%,0,0)}100%{-webkit-transform:translate3d(-200%,0,0);transform:translate3d(-200%,0,0)}}@media (max-width:1399px){.main-menu>ul>li{margin:0 10px}.header-currency{margin-left:10px}}@media (max-width:1199px){.header-currency{margin-left:30px}}@media (max-width:767px){.offer-notice{font-size:12px}.header-top{padding:6px 0}}
+
+        <div class="header-top">
+            <div class="notice-scroll-wrap">
+                <div class="notice-scroll">
+                    <p class="offer-notice"><a href="shop-details.html"></a></p>
+                    <p class="offer-notice"><a href="shop-details.html">Free shipping for domestic orders 150$+ (Some Exclusions apply)</a></p>
+                    <p class="offer-notice"><a href="shop-details.html">Free shipping for domestic orders 150$+ (Some Exclusions apply)</a></p>
+                    <p class="offer-notice"><a href="shop-details.html">Free shipping for domestic orders 150$+ (Some Exclusions apply)</a></p>
+                    <p class="offer-notice"><a href="shop-details.html">Free shipping for domestic orders 150$+ (Some Exclusions apply)</a></p>
+                    <p class="offer-notice"><a href="shop-details.html">Free shipping for domestic orders 150$+ (Some Exclusions apply)</a></p>
+
+                </div>
+            </div>
+        </div>

@@ -1,0 +1,9 @@
+                              {% if shop.customer_accounts_enabled %}
+                            {% if customer %}
+                            
+
+                            <li><a href="{{ routes.account_url }}">{% include 'svguser' %}</a></li>
+                            {% else %}
+                            <li><a href="{{ routes.account_login_url }}">{% include 'svguser' %}</a></li>
+                            {% endif %}
+ <li><a href="{{ routes.cart_url }}"> {% include 'svgcart' %} </a></li>

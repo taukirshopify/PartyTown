@@ -1,0 +1,222 @@
+<div class="widget_searchform_content active">
+  <form action="#">
+    <input type="text" value="" name="s" placeholder="Search">
+    <input type="submit" value="Search">
+  </form>
+</div>
+
+
+<div class="zo-recent-posts">
+  <h3 class="wg-title">Latest Posts</h3>
+  <ul>
+    
+    {% for article in blogs[blog.handle].articles %}
+    <li>
+      <div class="tb-recent-thumbb">
+        <a href="">
+          <img class="attachment" src="{{ article | img_url: 'small' }}" alt="">
+        </a>
+        <div class="recent-thumb-overlay"></div>
+      </div>
+      <div class="tb-recentb">
+        <div class="tb-postb">
+          
+          {{ article.title | link_to: article.url }}
+          
+          <p>{{ article.content | truncatewords: 5 }}</p>
+        </div>
+        <div class="tb-postd">
+          <span>{{ article.published_at | date: "%a, %b %d, %y" }}</span>
+        </div>
+      </div>
+    </li>
+    {% endfor %}
+    
+  </ul>
+</div>
+
+
+
+{% capture ddmm %}{{ 'now' | date: "%B %Y" }}{% endcapture %}
+{% capture month %}{{ 'now' | date: "%B" }}{% endcapture %}
+{% capture year %}{{ 'now' | date: "%Y" }}{% endcapture %}
+
+{% case month %}
+{% when 'January' %}{% assign k = 1 %}
+{% when 'February' %}{% assign k = 2 %}
+{% when 'March' %}{% assign k = 3 %}
+{% when 'April' %}{% assign k = 4 %}
+{% when 'June' %}{% assign k = 5 %}
+{% when 'July' %}{% assign k = 6 %}
+{% when 'August' %}{% assign k = 7 %}
+{% when 'September' %}{% assign k = 8 %}
+{% when 'October' %}{% assign k = 9 %}
+{% when 'November' %}{% assign k = 10 %}
+{% when 'December' %}{% assign k = 11 %}
+{% endcase %}
+
+{% for i in (1..k) %}
+{% case month %}
+{% when 'January' %}{% assign previous_month = 'December' %}
+{% when 'February' %}{% assign previous_month = 'January' %}
+{% when 'March' %}{% assign previous_month = 'February' %}
+{% when 'April' %}{% assign previous_month = 'March' %}
+{% when 'May' %}{% assign previous_month = 'April' %}
+{% when 'June' %}{% assign previous_month = 'May' %}
+{% when 'July' %}{% assign previous_month = 'June' %}
+{% when 'August' %}{% assign previous_month = 'July' %}
+{% when 'September' %}{% assign previous_month = 'August' %}
+{% when 'October' %}{% assign previous_month = 'September' %}
+{% when 'November' %}{% assign previous_month = 'October' %}
+{% when 'December' %}{% assign previous_month = 'November' %}
+{% endcase %}
+<dl>
+  <dt>
+    {% assign blogPresent = 0 %}
+    {% for article in blogs[blog.handle].articles limit: 100 %}
+    {% capture date %}
+    {{ article.published_at | date: "%B %Y" }}
+    {% endcapture %}
+    {% assign checkDate = month | append: ' ' | append: year %}
+    {% if date contains checkDate %}
+    {% assign blogPresent = 1 %}
+    {% endif %}
+    {% endfor %}
+
+    {% if blogPresent == 1 %}
+    {{ month }} {{year}}
+    {% else %}
+
+    {% endif %}
+
+  </dt>
+  <dd>
+    <ul class="blog_links">
+      {% for article in blogs[blog.handle].articles limit: 100 %}
+      {% capture date %}
+      {{ article.published_at | date: "%B %Y" }}
+      {% endcapture %}
+      {% assign checkDate = month | append: ' ' | append: year %}
+      {% if date contains checkDate %}
+      <li>&raquo; {{ article.title | link_to: article.url }}</li>
+      {% endif %}
+      {% endfor %}
+    </ul>
+  </dd>
+</dl>
+{% assign month = previous_month %}
+{% endfor %}
+
+{% assign prevYearsMonths = 'December' %}
+{% assign year = year | minus: 1 %}
+{% for y in (1..15) %}
+
+{% for i in (1..12) %}
+{% case prevYearsMonths %}
+{% when 'January' %}{% assign previous_month = 'December' %}
+{% when 'February' %}{% assign previous_month = 'January' %}
+{% when 'March' %}{% assign previous_month = 'February' %}
+{% when 'April' %}{% assign previous_month = 'March' %}
+{% when 'May' %}{% assign previous_month = 'April' %}
+{% when 'June' %}{% assign previous_month = 'May' %}
+{% when 'July' %}{% assign previous_month = 'June' %}
+{% when 'August' %}{% assign previous_month = 'July' %}
+{% when 'September' %}{% assign previous_month = 'August' %}
+{% when 'October' %}{% assign previous_month = 'September' %}
+{% when 'November' %}{% assign previous_month = 'October' %}
+{% when 'December' %}{% assign previous_month = 'November' %}
+{% endcase %}
+{% assign test = prevYearsMonths | append: ' ' | append: year %}
+<dl>
+  <dt>
+
+    {% assign blogPresent = 0 %}
+    {% for article in blogs[blog.handle].articles limit: 100 %}
+    {% capture date %}
+    {{ article.published_at | date: "%B %Y" }}
+    {% endcapture %}
+    {% assign checkDate = prevYearsMonths | append: ' ' | append: year %}
+    {% if date contains checkDate %}
+    {% assign blogPresent = 1 %}
+    {% endif %}
+    {% endfor %}
+
+
+    {% if blogPresent == 1 %}
+    {{ prevYearsMonths }} {{year}}
+    {% else %}
+
+    {% endif %}
+
+
+  </dt>
+  <dd>
+    <ul class="blog_links">
+      {% for article in blogs[blog.handle].articles limit: 100 %}
+      {% capture date %}
+      {{ article.published_at | date: "%B %Y" }}
+      {% endcapture %}
+      {% if date contains test %}
+      <li>&raquo; {{ article.title | link_to: article.url }}</li>
+      {% endif %}
+      {% endfor %}
+    </ul>
+  </dd>
+</dl>
+{% assign prevYearsMonths = previous_month %}
+{% endfor %}
+
+{% assign year = year | minus: 1 %}
+{% endfor %}
+
+
+
+------------------
+
+
+
+{% capture month %}{{ 'now' | date: "%B" }}{% endcapture %}
+{% for i in (1..3) %}
+{% case month %}
+{% when 'January' %}{% assign previous_month = 'December' %}
+{% when 'February' %}{% assign previous_month = 'January' %}
+{% when 'March' %}{% assign previous_month = 'February' %}
+{% when 'April' %}{% assign previous_month = 'March' %}
+{% when 'May' %}{% assign previous_month = 'April' %}
+{% when 'June' %}{% assign previous_month = 'May' %}
+{% when 'July' %}{% assign previous_month = 'June' %}
+{% when 'August' %}{% assign previous_month = 'July' %}
+{% when 'September' %}{% assign previous_month = 'August' %}
+{% when 'October' %}{% assign previous_month = 'September' %}
+{% when 'November' %}{% assign previous_month = 'October' %}
+{% when 'December' %}{% assign previous_month = 'November' %}
+{% endcase %}
+<dl>
+  <dt>{% if i == 1 %}This Month{% else %}{{ month }}{% endif %}</dt>
+  <dd>
+    <ul class="blog_links">
+      {% for article in blogs[blog.handle].articles limit: 48 %}
+      {% capture date %}{{ article.created_at | date: "%B %Y" }}{% endcapture %}
+      {% if date contains month %}
+      <li>&raquo; {{ article.title | link_to: article.url }}</li>
+      {% endif %}
+      {% endfor %}
+    </ul>
+  </dd>
+</dl>
+{% assign month = previous_month %}
+{% endfor %}    
+
+
+
+<div class="zo-recent-posts2 os4">
+  <h3 class="wg-title">Tag</h3>
+  <ul>
+    
+    {% for tag in blog.all_tags limit: 10 %}
+    <li>
+      {{ tag | link_to_tag: tag }}
+    </li>
+    {% endfor %}
+  </ul>
+</div>

@@ -1,0 +1,15 @@
+    {%- if request.design_mode or template contains 'cart' or template contains 'checkout' -%}
+      {{ content_for_header }}
+    {%- else -%}
+      {% capture content_for_header2 %}{{ content_for_header }}{% endcapture %}
+      {{
+        content_for_header2
+        | replace: ' defer="defer" ', ' type="lazyload_int" '
+        | replace: ' src=', ' data-src='
+        | replace: 'DOMContentLoaded', 'w3-DOMContentLoaded'
+        | replace: "window.addEventListener('load', asyncLoad, false);",
+          "window.addEventListener('w3-DOMContentLoaded', asyncLoad, false);"
+        | replace: "addEventListener('load', prefetchAssets);",
+          "addEventListener('w3-DOMContentLoaded', prefetchAssets);"
+      }}
+      <script>

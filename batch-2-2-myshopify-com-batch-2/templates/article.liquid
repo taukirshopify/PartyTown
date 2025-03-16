@@ -1,0 +1,140 @@
+<section class="blog-area bd-area">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12">
+        <div class="row">
+          <div class="tb-post-item ma-nn">
+            <a href="#">
+              <div class="tb-thumb">
+                <img src="{{ article | img_url: 'master' }}" alt="{{ artilce.image.alt }}">
+                <span class="tb-publish font-noraure-3">{{ article.published_at | date: '%a' }} / {{ article.pulished_at | date: '%b' }}</span>
+              </div>
+            </a>
+            <div class="tb-content7">
+              <div class="blog-info">
+                <span class="author-name">
+                  <i class="fa fa-user"></i>
+                  By
+                  <a href="#">{{ article.author }}</a>
+                </span>
+                <span class="categories">
+                  <i class="fa fa-tag"></i>
+                  {% for tag in article.tags %}
+                  <a href="{{ blog.url }}/tagged/{{ tag | handle }}">{{ tag }}</a>          
+                  {% unless forloop.last %},{% endunless %}
+                  {% endfor %}
+
+                </span>
+                <span class="comments-number">
+                  <i class="fa fa-comment"></i>
+                  {{ article.comments_count }} Comment
+                </span>
+              </div>
+              <h4 class="tb-titlel">{{ article.title }}</h4>
+              <div class="blog-desc">
+                {{ article.content }}
+              </div>
+              <div class="next-pre">
+                {% if blog.previous_article %}
+                <a class="blog1" href="{{ blog.previous_article }}"> <i class="fa fa-angle-left"></i> Previous</a>
+                {% endif %}
+                {% if blog.next_article %}
+                <a class="blog2" href="{{ blog.next_article }}"><i class="fa fa-angle-right"></i> Next</a>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+        {% form 'new_comment', article %}
+        <div class="row">
+          <div class="bd-comment">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <h4 class="tb-titlel">Leave a reply</h4>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <label class="l-contact">
+                Content
+                <em>*</em>
+              </label>
+              <textarea class="form-control {% if form.errors contains 'body' %}error{% endif %}" name="comment[body]" id="commentBody">{{ form.body }}</textarea>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="di-na bs">
+                <label class="l-contact">
+                  Name
+                  <em>*</em>
+                </label>
+                <input class="form-control {% if form.errors contains 'author' %}error{% endif %}" type="text" name="comment[author]" id="commentAuthor" required="" value="{{ form.author }}">
+              </div>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="di-na">
+                <label class="l-contact">
+                  Email
+                  <em>*</em>
+                </label> 
+                <input class="form-control" type="email" name="comment[email]" id="commentEmail"  required="" value="{{ form.email }}">
+              </div>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="last-cart-con bd-icon">
+                <input class="wpcf7" type="submit" value="Send Message">
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endform %}
+
+
+
+        <div>
+
+          
+          <h1>{{ article.comments_count }} Comment</h1>
+          
+
+          {% paginate article.comments by 1 %}
+
+
+          {% if comment and comment.created_at %}
+
+          {% if blog.moderated? %}
+          <p class="note form-success">
+            Your comment is pending
+            {% else %}
+            Your comment post successfully!
+          </p>
+          {% endif %}
+
+          {% endif %}
+
+          {% for comment in article.comments %}
+          {% include 'comment' %}
+          {% endfor %}
+
+
+
+          {% if paginate.pages > 1 %}
+          <div class="pagination tb-pagination text-right">
+            {{ paginate | default_pagination | replace: '&laquo; Previous', '<' | replace: 'Next &raquo;', '>' }}
+          </div>
+          {% endif %}
+
+          {% endpaginate %}
+
+        </div>
+
+
+
+      </div>
+      <div class="col-lg-3 col-md-4 col-sm-5 col-xs-12">
+        {% include 'blog-sidebar' %}
+      </div>
+    </div>
+  </div>
+</section>

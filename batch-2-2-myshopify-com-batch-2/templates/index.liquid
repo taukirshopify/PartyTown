@@ -1,0 +1,73 @@
+{% section 'slider' %}
+
+
+{{ content_for_index }}
+
+
+{% comment %}
+{% section 'banner-section' %}
+
+
+{% section 'featured-product' %}
+
+
+{% comment %}
+<section class="design-area hm-three">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <div class="lastest-from">
+          <h3>Featured Products</h3>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="features-curosel2 indicator-style2 home-2">
+
+        
+        {% assign all_product_count = 0 %}
+        {% for i in (1..3) %}
+        {% assign collection_setting = 'featured_product_id_' | append: i %}
+        {% if settings[collection_setting] != blank %}
+        {% assign all_product_count = all_product_count | plus: 1 %}
+        {% assign collection_handle = settings[collection_setting] %}
+        {% assign collection_object = collections[collection_handle] %}
+        
+        
+        {% for product in collection_object.products limit: product_limit  %}
+        
+        <!-- single-product start -->
+        <div class="col-md-3">
+          
+          {% include 'product-grid-item' %}
+          
+        </div>
+        
+        {% endfor %}
+        
+        
+        {% endif %}
+        {% endfor %}
+        
+        
+        
+        
+        
+        <!-- single-product end -->			
+      </div>
+    </div>
+  </div>
+</section>
+{% endcomment %}
+
+
+
+
+{% section 'tab-products' %}
+
+{% section 'home-blog' %}
+
+
+{% section 'special-product' %}
+
+{% endcomment %}

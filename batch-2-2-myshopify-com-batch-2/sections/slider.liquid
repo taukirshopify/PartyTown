@@ -1,0 +1,129 @@
+<section class="slider-main-area home-3">
+  <div class="main-slider an-si">
+    <div class="bend niceties preview-2">
+      <div id="ensign-nivoslider-2" class="slides">	
+        
+        {% assign i = 0 %}
+        {% for block in section.blocks %}
+        <img src="{{ block.settings.slider_img | img_url: 'master' }}" alt="" title="#slider-direction-{{ i }}"  />
+		{% assign i = i | plus: 1 %}
+        {% endfor %}
+        
+        
+      </div>
+      
+      
+      {% assign i = 0 %}
+      {% for block in section.blocks %}
+      <div id="slider-direction-{{ i }}" class="t-cn slider-direction Builder">
+        <div class="slide-all slide2">
+          <!-- layer 1 -->
+          <div class="layer-1">
+            <h2 class="title5" style="font-size: {{ block.settings.slider_font_size }}px;">{{ block.settings.slider_caption_1 }}</h2>
+          </div>
+          <!-- layer 2 -->
+          <div class="layer-2">
+            <h2 class="title6">{{ block.settings.slider_caption_2 }}</h2>
+          </div>
+          <!-- layer 2 -->
+          <div class="layer-2">
+            <p class="title0">Save Up To 40% Off</p>
+          </div>
+          <!-- layer 3 -->
+          <div class="layer-3">
+            <a class="min1" href="{{ block.settings.slider_caption_url }}">{{ block.settings.slider_caption_button }}</a>
+          </div>
+        </div>
+      </div>
+      {% assign i = i | plus: 1 %}
+      {% endfor %}
+      
+      
+      
+      
+      
+      
+    </div>
+  </div>
+</section>
+
+
+<style>
+
+</style>
+
+
+
+
+
+{% schema %}
+
+
+{
+"blocks":[
+
+  {
+	"type": "slide",
+    "name": "Slider",
+    "settings": [
+		{
+			"type": "image_picker",
+			"id": "slider_img",
+			"label": "Upload your slider image"
+		},
+		{
+			"type": "text",
+			"id": "slider_caption_1",
+			"label": "Caption 1"
+		},
+		{
+			"type": "text",
+			"id": "slider_caption_2",
+			"label": "Caption 2"
+		},
+		{
+			"type": "text",
+			"id": "slider_caption_button",
+			"label": "button",
+			"default": "Shop Now"
+		},
+		{
+			"type": "url",
+			"id": "slider_caption_url",
+			"label": "Url"
+		},
+
+		{
+            "type":      "range",
+            "id":        "slider_font_size",
+            "min":       50,
+            "max":        100,
+            "step":       5,
+            "unit":       "px",
+            "label":     "Font size",
+            "default":   80
+      }
+	]
+  }
+
+]
+}
+
+{% endschema %}
+
+
+
+
+
+
+
+
+
+
+
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

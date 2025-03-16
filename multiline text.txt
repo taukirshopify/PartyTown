@@ -1,0 +1,15 @@
+          {% if product.metafields.custom.tag_line.value %}
+            
+   
+              <div class="feature-list">
+
+
+{% assign selected_benefits = product.metafields.custom.tag_line.value | replace: '"', ' ' | replace: ']', ' '  | replace: '[', ' '  | split: ", "%}
+                {% for item in selected_benefits %}
+                  <span>{{ item }}</span>
+             
+                {% endfor %}
+               
+              </div>
+
+            {% endif %}

@@ -1,0 +1,10 @@
+git commit -m "initial commit"
+git push origin +HEAD
+
+
+
+error: remote origin already exists.
+
+git remote remove origin 
+
+add the origin again

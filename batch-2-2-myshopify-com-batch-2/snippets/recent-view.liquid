@@ -1,0 +1,65 @@
+{{ '//ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js' | script_tag }}
+{{ 'jquery.products.min.js' | asset_url | script_tag }}
+
+<div id="recently-viewed-products-area" class="shaddam_rec_view_area">
+  <div class="section-title">
+    <h4>Recently Viewed</h4>
+  </div>  
+  <div class="shaddam_rec_view_products shaddam_rec_carousel" id="recently-viewed-products">
+  </div>  
+</div>
+{% raw %}
+<script id="recently-viewed-product-template" type="text/x-jquery-tmpl">
+<div class="single-product">
+	<div class="single-product-item">
+		<div id="product-${handle}">
+			<div class="rec_v_image single-product-img clearfix hover-effect">
+				<a href="${url}">
+					<img src="${Shopify.Products.resizeImage(featured_image, "medium")}" />
+				</a>
+			</div>
+			<div class="single-product-info clearfix rec_v_details">
+				<h3><a href="${url}">${title}</a></h3>  
+				<div class="pro-price">   
+					{{if compare_at_price > price}} 
+					<span class="new-price">{{html Shopify.formatMoney(price, window.money_format)}}</span>
+					<span class="old-price"> {{html Shopify.formatMoney(compare_at_price, window.money_format)}}</span>
+					{{else}}
+					<span class="new-price">{{html Shopify.formatMoney(price, window.money_format)}}</span>
+					{{/if}}
+				</div>
+			</div>
+			<div class="pro-rating">  
+				<span class="shopify-product-reviews-badge" data-id="${id}"></span>
+			</div>   
+		</div>
+	</div>
+</div>
+</script>
+{% endraw %}
+
+<script>
+  /* this code for currency support */
+  window.show_multiple_currencies = {{settings.show_multiple_currencies}};
+  window.shop_currency = "{{ shop.currency }}";
+  window.money_format = "{{shop.money_with_currency_format}}";
+  
+  /* recently viewed plugin api start */
+  Shopify.Products.showRecentlyViewed( {
+    howManyToShow:5,
+    howManyToStoreInMemory:10,
+    wrapperId: 'recently-viewed-products', 
+    templateId: 'recently-viewed-product-template', 
+    onComplete: function() {
+
+    if (window.show_multiple_currencies) {
+    /* this section ID to be your currency picker (Select) ID */
+    Currency.convertAll(window.shop_currency, jQuery('#currencies').val(), 'span.money', 'money_format');
+  }
+                                      }
+
+                                      } );
+  /* recently viewed plugin api end */
+
+</script>
+

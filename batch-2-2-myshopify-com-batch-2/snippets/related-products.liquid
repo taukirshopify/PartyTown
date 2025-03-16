@@ -1,0 +1,55 @@
+{% assign related_product_limit_count = 3 %}
+{% assign related_product_limit = related_product_limit_count | plus: 1 %}
+
+{% if collection == null or collection.handle == 'frontpage' or collection.handle == 'all' %}
+{% assign product_found = false %}
+
+{% for c in product.collections %}
+{% if product_found == false and c.handle != 'frontpage' and c.handle != 'all' and c.all_products_count > 1 %}
+{% assign product_found = true %}
+{% assign collection = c %}
+{% endif %}
+{% endfor %}
+
+{% endif %}
+
+
+
+{% if collection and collection.products_count > 1 %}
+<section class="single-pro-area7">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="last-line">
+          <h3 class="wg-title">Related Products</h3>
+        </div>
+      </div>
+      <div class="non7">
+        
+        {% assign current_product = product %}
+        {% assign current_product_count = false %}
+        
+        {% for product in collection.products limit: related_product_limit %}
+        
+        {% if product.handle == current_product.handle %}
+        
+        {% assign current_product_count = true %}
+        
+        {% else %}
+        
+        {% unless  current_product_count == false and forloop.last %}
+
+        <div class="col-lg-3 col-md-4 col-sm-6">
+			{% include 'product-grid-item' %}
+        </div>
+        
+        {% endunless %}
+        
+        {% endif %}
+			
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endif %}

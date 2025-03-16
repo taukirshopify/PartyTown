@@ -1,0 +1,34 @@
+<!-- /templates/list-collections.liquid -->
+
+<div class="container">
+
+{% for collection in collections %}
+
+  {% unless collection.handle == 'frontpage' %}
+
+    {% capture collection_title %}{{ collection.title | escape }}{% endcapture %}
+
+    <div class="section-header">
+      <p class="h1 section-header__left">{{ collection_title }}</p>
+      <div class="section-header__right">
+        <a href="{{ collection.url }}" title="{{ 'collections.general.link_title' | t: title: collection_title }}">More {{ collection_title }} &rsaquo;</a>
+      </div>
+    </div>
+
+    <div class="grid-uniform">
+      {% for product in collection.products limit:4 %}
+        {% assign grid_item_width = 'large--one-fifth medium--one-half' %}
+      <div class="col-md-3">
+        {% include 'product-grid-item' %}
+      </div>
+      {% endfor %}
+    </div>
+
+    {% unless forloop.last %}<hr>{% endunless %}
+
+  {% endunless %}
+
+{% endfor %}
+
+  
+</div>

@@ -1,0 +1,108 @@
+{{ collection.description }}
+
+<div class="all-shop-sidebar">
+  <div class="top-shop-sidebar">
+    <h3 class="wg-title">SHOP BY</h3>
+  </div>
+  <div class="shop-one">
+    <h3 class="wg-title2">Categories</h3>
+    <ul class="product-categories">
+
+      {% for c in collections limit: 5 %}
+      {% if c.title != 'bag' %}
+      <li class="cat-item {% if collection and collection.handle == c.handle %}current-cat{% endif %}">
+        <a href="{{ c.url }}">{{ c.title }}</a>
+        <span class="count">({{ c.products_count }})</span>
+      </li>
+      {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+  <div class="shop-one">
+    <h3 class="wg-title2">Our Brand</h3>
+    <ul class="product-categories">
+
+      {% for vendor in shop.vendors %}
+      <li class="cat-item {% if collection.current_vendor == vendor %}current-cat{% endif %}">
+        <a href="{{ vendor | url_for_vendor }}">{{ vendor }}</a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <div class="shop-one">
+    <h3 class="wg-title2">Product Type</h3>
+    <ul class="product-categories">
+      {% for mirpur in shop.types %}
+
+      {% if mirpur != '' %}
+      <li class="cat-item {% if collection.current_type == mirpur %}current-cat{% endif %}">
+        <a href="{{ mirpur | url_for_type }}">{{ mirpur }}</a>
+      </li>
+      {% endif %}
+
+      {% endfor %}
+    </ul>
+  </div>
+
+  <div class="shop-one">
+    <h3 class="wg-title2">Choose Color</h3>
+    <ul class="product-categories">
+
+      {% assign tags = settings.color_picker | replace: ', ', ',' | replace: ' ,', ',' | split: ',' %}
+
+      {% for t in tags %}
+
+      {% assign tag = t | strip %}
+
+      {% if current_tags contains tag %}
+      <li class="cat-item cat-item-11 current-cat">
+        <span  class="color {{ tag }}-color" style="background: {{ tag }} none repeat scroll 0 0; border: 2px solid red;">{{ tag }}</span>
+      </li>
+      {% elsif collection.all_tags contains tag %}
+      <li class="cat-item cat-item-11">
+        <a style="background: {{ tag }} none repeat scroll 0 0;" class="color {{ tag }}-color" href="/collections/all/{{ tag | handle }}">{{ tag }}</a>
+      </li>
+      {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+  <div class="shop-one">
+    <ul class="product-categories">
+      <h3 class="wg-title2">Size</h3>
+
+      {% assign tags = 'xl, xs, ml, md, X, L, M, sm' | split: ',' %}
+
+      {% for t in tags %}
+
+      {% assign tag = t | strip %}
+
+      {% if current_tags contains tag %}
+      <li class="cat-item cat-item-11 current-cat">
+        {{ tag }}
+      </li>
+      {% elsif collection.all_tags contains tag %}
+      
+      <li class="cat-item cat-item-11">
+        <a href="/collections/all/{{ tag | handle }}">{{ tag }}</a>
+      </li>
+      {% endif %}
+      {% endfor %}
+
+    </ul>
+  </div>
+
+
+  <div class="shop-one">
+    <h3 class="wg-title2">Tags</h3>
+    <ul class="product-categories">
+      {% for fan in collection.tags limit: 5 %}
+      <li class="cat-item">
+        <a href="/collections/all/{{ fan | handle }}">{{ fan }}</a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+
+
+</div>

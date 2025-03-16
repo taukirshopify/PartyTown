@@ -1,0 +1,96 @@
+           {% for block in section.blocks %}  
+           {% case block.type %}
+         
+             {% when 'link' %}  
+          
+             {% when 'custom-text' %}
+         
+                  <div class="image-carosul-wrapper">
+
+                    {% if block.settings.id == blank or block.settings.id.empty? %}
+
+
+                      {% endif%}
+                 
+ 
+           {% endcase %} 
+         {% endfor %}
+
+
+
+  "blocks": [
+  {
+    "type": "link",
+    "name": "Link",
+    "settings": [
+   
+    ]
+  },
+  {
+    "type": "custom-text",
+    "name": "Image Slider",
+    "settings": [
+
+    ]
+  }
+],
+
+Height- geting pixel
+
+
+<script>
+   window.addEventListener('load', function () {
+    
+  var elementh = document.getElementById('heightgeting-id');
+   const getheight = elementh.offsetHeight;
+  [...document.querySelectorAll(".image-wrapper")].map(
+    (element, index, array) => {
+      element.style["height"] = getheight + "px";
+    }
+  );
+ 
+
+    $(window).resize(function () {
+
+      var elementha = document.getElementById('heightgeting-id');
+   const getheighta = elementha.offsetHeight;
+  [...document.querySelectorAll(".image-wrapper")].map(
+    (element, index, array) => {
+      element.style["height"] = getheighta + "px";
+    }
+  );
+  });
+
+})
+</script>
+
+
+ for opiton schema settings
+
+ {% if section.settings.arroa == "Orange" %}
+                                    stroke="#D77628"
+                                  {% elsif section.settings.arroa == "Yellow" %}
+                                  stroke="#F2E085"
+                         
+                                  {% endif %}
+
+            "type": "select",
+            "id": "arroa",
+            "label": "Please Select your Wave Color",
+            
+            "options": [
+                {
+            
+                "value": "Orange",
+                "label": "Orange"
+                },
+                {
+            
+                "value": "Yellow",
+                "label": "Yellow"
+                }
+            ],
+            "default": "Orange"
+          
+           }
+        ],

@@ -1,0 +1,73 @@
+{% assign on_sale = false %}
+{% if product.compare_at_price > product.price %}
+{% assign on_sale = true %}
+{% endif %}
+
+{% assign sold_out = true %}
+{% if product.available %}
+{% assign sold_out = false %}
+{% endif %}
+
+
+<div class="li-item">
+  <div class="col-md-4 col-sm-4">
+    <div class="tb-product-item-inner tb2 pct-last">
+      {% if on_sale %}
+      <span class="onsale two">{{ 'products.product.sale' | t }}</span>
+      {% else %}
+      <span class="onsale">{{ 'products.product.new' | t }}</span>
+      {% endif %}
+      
+      <img alt="" src="{{ product.featured_image.src | img_url: 'large' }}">
+      <a class="la-icon ts"  href="#productModal" title="Quick View" data-toggle="modal"><i class="fa fa-eye"></i></a>
+    
+    </div>
+  </div>
+  <div class="col-md-8 col-sm-8">
+    <div class="f-fix">
+      <div class="tb-beg">
+         <a href="{{ product.url }}">{{ product.title }}</a>
+      </div>
+      <div class="tb-product-wrap-price-rating">
+        <div class="tb-product-price font-noraure-3">
+          {% if on_sale %}
+          <span class="amount2 ana">{{ product.price | money }} - </span>
+          <span class="amount2 ana"><del>{{ product.compare_at_price | money }}</del></span>
+          {% else %}
+          <span class="amount2 ana">{{ product.price | money }} </span>
+          {% endif %}
+        </div>
+      </div>
+      <p class="desc">{{ product.description | truncatewords: 50 }} </p>
+      <div class="last-cart l-mrgn ns">
+        <form action="/cart/add" method="post" enctype="multipart/form-data">
+          
+          <select style="display: none;" name="id">
+          
+            {% for variant in product.variants %}
+            <option value="{{ variant.id }}"> {{ variant.title }} - {{ variant.price | money }} </option>
+          	{% endfor %}
+          </select>
+          
+          {% if sold_out %}
+        	<button type="submit" name="add" class="las4">pre order</button>
+          {% else %}
+           <button type="submit" name="add" class="las4">Add To Cart</button>
+          {% endif %}
+          
+        </form>
+      </div>
+      <div class="tb-product-btn">
+        <a href="#">
+          <i class="fa fa-eye"></i>
+        </a>
+        <a href="#">
+          <i class="fa fa-heart"></i>
+        </a>
+        <a href="#">
+          <i class="fa fa-retweet"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

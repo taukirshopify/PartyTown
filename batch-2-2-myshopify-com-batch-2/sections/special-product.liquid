@@ -1,0 +1,51 @@
+<section class="specail-area home-3">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="specail-top">
+          <h3>Specail</h3>
+          <div class="row">
+            <div class="col-md-12  col-sm-6">
+              
+              {% assign sohan = collections[section.settings.faisal] %}
+              
+              {% for product in sohan.products limit: 2 %}
+              
+              {% include 'special-product-grid-item' %}
+              
+              {% endfor %}
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+{% schema %}
+  {
+    "name": "Special Product",
+    "settings": [
+		{
+			"type": "collection",
+			"id": "faisal",
+			"label": "select your collection"
+		}
+
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

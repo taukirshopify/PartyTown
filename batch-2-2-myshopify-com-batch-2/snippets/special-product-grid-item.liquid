@@ -1,0 +1,83 @@
+{% assign on_sale = false %}
+{% if product.compare_at_price > product.price %}
+{% assign on_sale = true %}
+{% endif %}
+
+
+{% assign sold_out = true %}
+{% if product.available %}
+{% assign sold_out = false %}
+{% endif %}
+
+
+
+
+<div class="tb-product-item">
+  <div class="tb-image">
+    
+    {% if on_sale %}
+  <span class="new">{{ 'products.product.sale' | t }}</span>
+  {% else %}
+  <span class="new">{{ 'products.product.new' | t }}</span>
+  {% endif %}
+    
+    <img src="{{ product.featured_image.src | img_url: 'master' }}" alt="">
+    <a class="la-icon" data-toggle="modal" title="Quick View" href="#productModal">
+      <i class="fa fa-eye"></i>
+    </a>
+  </div>
+  <div class="tb-content">
+    <div class="tb-beg">
+      <a href="{{ product.url }}">{{ product.title }}</a>
+    </div>
+    
+    
+    
+    <div class="tb-product-price font-noraure-3">
+      
+      
+      
+      {% if on_sale %}
+          <span class="amount2 ana">{{ product.price | money }} - </span>
+          <span class="amount2 ana"><del>{{ product.compare_at_price | money }}</del></span>
+          {% else %}
+          <span class="amount2 ana">{{ product.price | money }} </span>
+          {% endif %}
+      
+      
+      
+    </div>
+    
+    
+    
+    
+    <div class="tb-product-btn">
+      
+      
+      
+      
+      <form action="/cart/add" method="post" enctype="multipart/form-data">
+          
+          <select style="display: none;" name="id">
+          
+            {% for variant in product.variants %}
+            <option value="{{ variant.id }}"> {{ variant.title }} - {{ variant.price | money }} </option>
+          	{% endfor %}
+          </select>
+          
+          {% if sold_out %}
+        	<button type="submit" name="add" class="las4">pre order</button>
+          {% else %}
+           <button type="submit" name="add" class="las4"><i class="fa fa-shopping-cart"></i></button>
+          {% endif %}
+          
+      </form>
+      <a href="#">
+        <i class="fa fa-heart"></i>
+      </a>
+      <a href="#">
+        <i class="fa fa-retweet"></i>
+      </a>
+    </div>
+  </div>
+</div>
