@@ -1,0 +1,71 @@
+{% if item.selling_plan_allocation.selling_plan.name == blank %}
+                            <div class="subscribe-save-wrapper">
+                               <label class="subscribe-label">
+                               <span> Subscribe & </span>
+                                 <span class="save-badge">Save 20%</span>
+                               </label>
+                               <label class="switch">
+                                 <input type="checkbox" id="subscribe-toggle">
+                                 <span class="switch-slider"></span>
+                               </label>
+                            </div> 
+                           {%  endif %}
+
+                           {% assign handle = item.product.handle %}
+                           {% assign product_upsell = all_products[handle] %}
+                           {{ item.selling_plan_allocation.selling_plan.name }}
+
+                           {% assign ales_items = product_upsell.selling_plan_groups[0].selling_plans %}
+                           <!-- dropdown -->
+                          <div id="subscribe-dropdown" class="subscribe-dropdown" >
+                            <select id="subscribe-plan"  >
+                              <option disabled selected>Subscription</option>
+                              {% for plandName in ales_items %}
+                                
+                              <option value="{{ plandName.id }}" data-step="{{forloop.index }}">     {{plandName.name }}</option>
+                        
+                            {% endfor %}
+                            </select>
+                          </div>
+
+
+
+
+                          <script> 
+
+                          document.querySelector('form').addEventListener('submit', function(e) {
+                            document.getElementById("subscribe-plan").disabled = true;
+                          });
+                       
+
+
+
+                      console.log({{  item | json }});
+                      console.log({{ product_upsell.selling_plan_allocation }} );
+     console.log({{product_upsell.selling_plan_groups[0].selling_plans | json }});
+     function updateCartSellingPlan(qty, line, sellingplan = "") {
+      fetch('/cart/change.js', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+              line: line,
+              quantity: qty,
+              selling_plan: sellingplan
+          })
+      })
+      .then(response => response.json())
+      .then(data => {
+          console.log('Selling Plan Updated', data);
+          // Re-render or refresh the cart items
+         
+      })
+      .catch(error => {
+          console.error('Error updating cart:', error);
+      });
+    }
+    
+                        </script>
+                        {% assign ales_items = product_upsell.selling_plan_groups[0].selling_plans %}
+    

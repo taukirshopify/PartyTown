@@ -1,0 +1,46 @@
+           //  exta coding start  here
+            
+                 if (response.sections && response.sections['cart-drawer']) {
+                   const parser = new DOMParser();
+                   const doc = parser.parseFromString(response.sections['cart-drawer'], 'text/html');
+                   const totalValueElement = doc.querySelector('.totals__total-value');
+                   if (totalValueElement) {
+                   const totalValue = totalValueElement.textContent.trim();
+                   const items = document.querySelectorAll('.cart-item');
+                   const itemIds = Array.from(items).map(item => item.getAttribute('data-id'));
+                   const targetVariantId = "49700406001960";
+                   const totalValueNumber = parseFloat(totalValue.replace(/[^0-9.-]+/g, ''));
+
+                     if (totalValueNumber > 800 && !itemIds.includes(targetVariantId)) {
+                     console.log('Total value exceeds 800 and target variant is not in the cart');
+                     const addToCartConfig = fetchConfig('javascript');
+                     addToCartConfig.headers['X-Requested-With'] = 'XMLHttpRequest';
+                     delete addToCartConfig.headers['Content-Type'];
+                   
+                     const addToCartFormData = new FormData();
+                     addToCartFormData.append('id', targetVariantId);
+                     addToCartFormData.append('quantity', 1);
+                     addToCartFormData.append('sections', 'cart-drawer');
+                     addToCartConfig.body = addToCartFormData;
+                   
+                     fetch(`${routes.cart_add_url}`, addToCartConfig)
+                     .then((response) => response.json())
+                     .then((addToCartResponse) => {
+                     console.log('Add to cart response:', addToCartResponse);
+                     const finaldoc = parser.parseFromString(addToCartResponse.sections['cart-drawer'], 'text/html');
+                     const cartItemsContainer = finaldoc.querySelector('.cart-items');
+                     if (cartItemsContainer) {
+                     console.log('Updating cart items container');
+                     const currentCartItemsContainer = document.querySelector('.cart-items');
+                     if (currentCartItemsContainer) {
+                     currentCartItemsContainer.innerHTML = cartItemsContainer.innerHTML;
+                     }
+                     }
+                     })
+                     .catch((error) => {
+                     console.error('Error adding to cart:', error);
+                     });
+                     }
+                   }
+                 }
+                 //  exta coding end here

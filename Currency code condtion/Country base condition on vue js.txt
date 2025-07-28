@@ -1,0 +1,8 @@
+<div v-if="['US','CA','AU','NZ'].includes(Shopify.country)" >
+  <section class="fw-normal small my-3">
+    Or make 4 interest-free payments of {% assign afterpay_price = product.price | divided_by: 4 | money_with_currency %} {{ afterpay_price }} fortnightly with Afterpay. More info
+  </section>
+</div>
+<div v-else>
+
+</div>
